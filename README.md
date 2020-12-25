@@ -1,9 +1,9 @@
 # Numeric-Matrix-Processor
 Initial commit, Stage 1 of 6 complete.
-In stage 1 the program will add matricies of the same dimention.
-Matricies are to have their size in (x,y) input initially.
+In stage 1 the program will add matrices of the same dimension.
+Matrices are to have their size in (x,y) input initially.
 
-for example matrix F(3,3) would be input like:
+For example matrix F(3,3) would be input like:
 
 3 3
 
