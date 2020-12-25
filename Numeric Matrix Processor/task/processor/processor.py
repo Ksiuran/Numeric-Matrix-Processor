@@ -3,6 +3,8 @@ import sys
 
 
 def build_matrix(x, y, auto=0):
+    # the auto default param is so I can tell it to create a matrix
+    # full of 0s in the specified size
     mtx = list()
     i = 0
     if auto == 0:
