@@ -1,5 +1,22 @@
-# Start with matrix addition
+# Stage 3 will be mtx * mtx
 import sys
+
+
+def gather_mtx(num=None):
+    # assigning like this reqs a iterable, using map to convert the original
+    # iterable to contain ints
+    text1 = "Enter size of matrix"
+    text2 = "Enter matrix"
+    if num == 1:
+        text1 = "Enter size of first matrix"
+        text2 = "Enter first matrix"
+    elif num == 2:
+        text1 = "Enter size of second matrix"
+        text2 = "Enter second matrix"
+    x, y = map(int, input(text1).split())
+    print(text2)
+    mtx = build_matrix(x, y)
+    return mtx
 
 
 def build_matrix(x, y, auto=0):
@@ -9,7 +26,7 @@ def build_matrix(x, y, auto=0):
     i = 0
     if auto == 0:
         while i < x:
-            row = list(map(int, input().split()))
+            row = list(map(float, input().split()))
             if len(row) == y:
                 mtx.append(row)
                 i += 1
@@ -43,15 +60,59 @@ def const_mult(mtx3, x):
     return result
 
 
-# assigning like this reqs a iterable, using map to convert the original
-# iterable to contain ints
-x1, y1 = map(int, input().split())
-mtx1 = build_matrix(x1, y1)
-mult = int(input())
-res = const_mult(mtx1, mult)
-# commented until I implement a menu in later stages
-# x2, y2 = map(int, input().split())
-# mtx2 = build_matrix(x2, y2)
-# res = add_mtx(mtx1, mtx2)
-for p in res:
-    print(" ".join(list(map(str, p))))
+def mtx_mult(mtx3, mtx4):
+    result = list()
+    i = 0
+    # check if the matrices can be multiplied
+    if len(mtx3[0]) == len(mtx4):
+        x = len(mtx3)
+        y = len(mtx4[0])
+        # build an empty matrix the size of the product
+        while i < x:
+            result.append([0] * y)
+            i += 1
+        for z in range(len(mtx3)):
+            for p in range(len(mtx4[0])):
+                summ = 0
+                for j in range(len(mtx3[0])):
+                    summ += mtx3[z][j] * mtx4[j][p]
+                result[z][p] = summ
+    else:
+        print("The operation cannot be performed.")
+        return None
+    return result
+
+
+def p_result(result):
+    print("The result is:")
+    for p in result:
+        print(" ".join(list(map(str, p))))
+    return
+
+
+while True:
+    res = None
+    ans = input("""1. Add matrices
+2. Multiply matrix by a constant
+3. Multiply matrices
+0. Exit
+Your choice:""")
+    if ans == "1":
+        mtx1 = gather_mtx(1)
+        mtx2 = gather_mtx(2)
+        res = add_mtx(mtx1, mtx2)
+        p_result(res)
+    elif ans == "2":
+        mtx1 = gather_mtx()
+        mult = float(input())
+        res = const_mult(mtx1, mult)
+        p_result(res)
+    elif ans == "3":
+        mtx1 = gather_mtx(1)
+        mtx2 = gather_mtx(2)
+        res = mtx_mult(mtx1, mtx2)
+        p_result(res)
+    elif ans == "0":
+        sys.exit(0)
+    else:
+        pass
