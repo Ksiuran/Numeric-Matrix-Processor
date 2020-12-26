@@ -1,4 +1,4 @@
-# Stage 3 will be mtx * mtx
+# Stage 4 will be transposing a matrix
 import sys
 
 
