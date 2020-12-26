@@ -34,12 +34,24 @@ def add_mtx(mtx3, mtx4):
         sys.exit(0)
 
 
+def const_mult(mtx3, x):
+    result = build_matrix(len(mtx3), len(mtx3[0]), 1)
+    for i in range(len(mtx3)):
+        # iterate through columns
+        for j in range(len(mtx3[0])):
+            result[i][j] = mtx3[i][j] * x
+    return result
+
+
 # assigning like this reqs a iterable, using map to convert the original
 # iterable to contain ints
 x1, y1 = map(int, input().split())
 mtx1 = build_matrix(x1, y1)
-x2, y2 = map(int, input().split())
-mtx2 = build_matrix(x2, y2)
-res = add_mtx(mtx1, mtx2)
-for i in res:
-    print(" ".join(list(map(str, i))))
+mult = int(input())
+res = const_mult(mtx1, mult)
+# commented until I implement a menu in later stages
+# x2, y2 = map(int, input().split())
+# mtx2 = build_matrix(x2, y2)
+# res = add_mtx(mtx1, mtx2)
+for p in res:
+    print(" ".join(list(map(str, p))))
