@@ -1,4 +1,4 @@
-# Stage 4 will be transposing a matrix
+# Stage 5 will be getting the determinant of a matrix
 import sys
 
 
