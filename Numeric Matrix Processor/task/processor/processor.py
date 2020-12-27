@@ -1,4 +1,4 @@
-# Stage 3 will be mtx * mtx
+# Stage 4 will be transposing a matrix
 import sys
 
 
@@ -62,15 +62,9 @@ def const_mult(mtx3, x):
 
 def mtx_mult(mtx3, mtx4):
     result = list()
-    i = 0
     # check if the matrices can be multiplied
     if len(mtx3[0]) == len(mtx4):
-        x = len(mtx3)
-        y = len(mtx4[0])
-        # build an empty matrix the size of the product
-        while i < x:
-            result.append([0] * y)
-            i += 1
+        result = build_matrix(len(mtx3), len(mtx4[0]), 1)
         for z in range(len(mtx3)):
             for p in range(len(mtx4[0])):
                 summ = 0
@@ -88,6 +82,42 @@ def p_result(result):
     for p in result:
         print(" ".join(list(map(str, p))))
     return
+
+
+def t_md(mtx):
+    result = build_matrix(len(mtx), len(mtx[0]), 1)
+    for i in range(len(mtx)):
+        for j in range(len(mtx[0])):
+            result[j][i] = mtx[i][j]
+    return result
+
+
+def t_sd(mtx):
+    result = build_matrix(len(mtx), len(mtx[0]), 1)
+    for i in range(len(mtx)):
+        p = len(mtx) - i - 1
+        for j in range(len(mtx[0])):
+            z = len(mtx[0]) - j - 1
+            result[j][i] = mtx[p][z]
+    return result
+
+
+def t_v(mtx):
+    result = build_matrix(len(mtx), len(mtx[0]), 1)
+    for i in range(len(mtx)):
+        for j in range(len(mtx[0])):
+            z = len(mtx[0]) - j - 1
+            result[i][z] = mtx[i][j]
+    return result
+
+
+def t_h(mtx):
+    result = build_matrix(len(mtx), len(mtx[0]), 1)
+    for i in range(len(mtx)):
+        p = len(mtx) - i - 1
+        for j in range(len(mtx[0])):
+            result[p][j] = mtx[i][j]
+    return result
 
 
 while True:
@@ -111,6 +141,22 @@ Your choice:""")
         mtx1 = gather_mtx(1)
         mtx2 = gather_mtx(2)
         res = mtx_mult(mtx1, mtx2)
+        p_result(res)
+    elif ans == "4":
+        ans = input("""1. Main diagonal
+2. Side diagonal
+3. Vertical line
+4. Horizontal line
+Your choice:""")
+        mtx1 = gather_mtx()
+        if ans == "1":
+            res = t_md(mtx1)
+        elif ans == "2":
+            res = t_sd(mtx1)
+        elif ans == "3":
+            res = t_v(mtx1)
+        elif ans == "4":
+            res = t_h(mtx1)
         p_result(res)
     elif ans == "0":
         sys.exit(0)
