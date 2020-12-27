@@ -95,6 +95,7 @@ while True:
     ans = input("""1. Add matrices
 2. Multiply matrix by a constant
 3. Multiply matrices
+4. Transpose matrix
 0. Exit
 Your choice:""")
     if ans == "1":
