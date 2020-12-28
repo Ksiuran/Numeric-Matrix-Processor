@@ -120,12 +120,38 @@ def t_h(mtx):
     return result
 
 
+def det(mtx):
+    # find the determinant of a matrix, recursively
+    # see: https://www.youtube.com/watch?v=H9BWRYJNIv4
+    if len(mtx) == 2 and len(mtx[0]) == 2:
+        # if the matrix is a 2x2, we can find the determinant, return it.
+        return mtx[0][0] * mtx[1][1] - mtx[0][1] * mtx[1][0]
+    elif len(mtx) == 1 and len(mtx[0]) == 1:
+        return mtx[0][0]
+    else:
+        deter = 0
+        sign = -1
+        for z in range(len(mtx[0])):
+            sign *= -1
+            minor = build_matrix(len(mtx) - 1, len(mtx[0]) - 1, 1)
+            for i in range(len(mtx)):
+                for j in range(len(mtx[0])):
+                    if i != 0 and j != z:
+                        if j > z:
+                            minor[i - 1][j - 1] = mtx[i][j]
+                        else:
+                            minor[i - 1][j] = mtx[i][j]
+            deter = deter + (sign * mtx[0][z] * det(minor))
+    return deter
+
+
 while True:
     res = None
     ans = input("""1. Add matrices
 2. Multiply matrix by a constant
 3. Multiply matrices
 4. Transpose matrix
+5. Calculate a determinant
 0. Exit
 Your choice:""")
     if ans == "1":
@@ -159,6 +185,11 @@ Your choice:""")
         elif ans == "4":
             res = t_h(mtx1)
         p_result(res)
+    elif ans == "5":
+        mtx1 = gather_mtx()
+        res = det(mtx1)
+        print("The result is:")
+        print(res)
     elif ans == "0":
         sys.exit(0)
     else:
