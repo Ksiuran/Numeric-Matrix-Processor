@@ -1,4 +1,4 @@
-# Stage 5 will be getting the determinant of a matrix
+# Stage 6 will be getting the inverse of a matrix
 import sys
 
 
