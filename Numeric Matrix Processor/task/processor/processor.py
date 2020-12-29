@@ -1,4 +1,4 @@
-# Stage 5 will be getting the determinant of a matrix
+# Stage 6 will be getting the inverse of a matrix
 import sys
 
 
@@ -78,10 +78,13 @@ def mtx_mult(mtx3, mtx4):
 
 
 def p_result(result):
-    print("The result is:")
-    for p in result:
-        print(" ".join(list(map(str, p))))
-    return
+    if result is None:
+        return
+    else:
+        print("The result is:")
+        for p in result:
+            print(" ".join(list(map(str, p))))
+        return
 
 
 def t_md(mtx):
@@ -145,6 +148,38 @@ def det(mtx):
     return deter
 
 
+def inverse(mtx):
+    adj = build_matrix(len(mtx), len(mtx[0]), 1)
+    control2 = build_matrix(len(mtx), len(mtx[0]), 1)
+    deter = det(mtx)
+    if deter == 0:
+        print("Inverse matrix doesn't exist")
+        return None
+    sign = 1
+    for p in range(len(mtx)):
+        if (p + 1) % 2 == 0 and len(mtx) > 3:
+            sign += 1
+        if (p + 1) % 2 != 0 and len(mtx) > 3 and p > 1:
+            sign -= 1
+        for z in range(len(mtx[0])):
+            minor = build_matrix(len(mtx) - 1, len(mtx[0]) - 1, 1)
+            for i in range(len(mtx)):
+                for j in range(len(mtx[0])):
+                    if i != p and j != z:
+                        if j > z and i > p:
+                            minor[i - 1][j - 1] = mtx[i][j]
+                        elif i > p:
+                            minor[i - 1][j] = mtx[i][j]
+                        elif j > z:
+                            minor[i][j - 1] = mtx[i][j]
+                        else:
+                            minor[i][j] = mtx[i][j]
+            sign += 1
+            adj[p][z] = det(minor) * ((-1) ** sign)
+    resul = const_mult(t_md(adj), (1/deter))
+    return resul
+
+
 while True:
     res = None
     ans = input("""1. Add matrices
@@ -152,6 +187,7 @@ while True:
 3. Multiply matrices
 4. Transpose matrix
 5. Calculate a determinant
+6. Inverse matrix
 0. Exit
 Your choice:""")
     if ans == "1":
@@ -190,6 +226,10 @@ Your choice:""")
         res = det(mtx1)
         print("The result is:")
         print(res)
+    elif ans == "6":
+        mtx1 = gather_mtx()
+        res = inverse(mtx1)
+        p_result(res)
     elif ans == "0":
         sys.exit(0)
     else:
